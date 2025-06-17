@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Quarto"
-author: "Isabella Gollini"
+author: "Stefan Gouws"
 date: today
 date-format: long
 format:
