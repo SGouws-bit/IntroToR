@@ -1,0 +1,210 @@
+---
+title: "Introduction to Quarto"
+author: "Isabella Gollini"
+date: today
+date-format: long
+format:
+  html:
+    code-fold: true
+    code-tools: true
+    code-line-numbers: true
+    fontsize: 1.2em
+    toc: true
+    toc-title: '**Contents**'
+    embed-resources: true
+    grid:
+      body-width: 800px
+    theme: 
+      - superhero
+  revealjs: 
+    slide-number: true
+    html-math-method: mathjax
+    theme: [default, custom-theme.css]
+    footer: ""
+    incremental: false
+    fragments: true
+    chalkboard: false
+    menu: true
+    scrollable: true
+    preview-links: false
+    embed-resources: false
+    standalone: false       
+execute: 
+  eval: true
+  echo: true
+---
+
+The sections can be defined using \#
+
+# Main title - Very large
+
+------------------------------------------------------------------------
+
+## A subsection title - less large!
+
+------------------------------------------------------------------------
+
+### A subsubsection title - getting smaller!
+
+The empty lines in between are important; if we remove the empty lines R can get confused.
+
+## Aesthetics
+
+Italic font is obtained with *italic* and bold with **bold**. Three underscores give you ***bold plus italic***.
+
+Itemisation is straightforward:
+
+-   bullet 1
+
+-   bullet 2
+
+-   third point
+
+-   point 4
+
+but, again, the lines in between are important.
+
+Enumerations:
+
+1.  first bullet
+
+2.  second bullet
+
+3.  third bullet
+
+\newpage
+
+## Multiple columns:
+
+::::: columns
+::: {.column width="40%"}
+Here is the **first** Column.
+
+```{r}
+#| label: mean-speed
+mean(cars$speed)
+```
+
+The mean speed is `r mean(cars$speed)`. What does the histogram look like?
+:::
+
+::: {.column width="60%"}
+And this block will be put on the right:
+
+```{r}
+#| label: hist-speed
+hist(cars$speed)
+```
+:::
+:::::
+
+\newpage
+
+## Emphasise through using colour!
+
+Roses are [red]{style="color: red;"}, and violets are [blue]{style="color: blue;"}. Colour is good to highlight a [point]{style="color: green;"}.
+
+> If you want to emphasise a phrase, you can use a block
+
+## Linking to websites
+
+An external link can be written down explicitly <http://rmarkdown.rstudio.com> or as a [link](http://rmarkdown.rstudio.com).
+
+## Formulas
+
+$\alpha$ + $\beta$
+
+The style for formulas follows TeX syntax. Proficiency with TeX syntax is not required, and assessment will definitely not revolve around testing TeX knowledge.
+
+In general, you can use TeX syntax anywhere in the document, to do all sort of things. More commonly, TeX is widely used due to its ample support for mathematical notations and formulas.
+
+For example, an inline formula could be $ax^2 + bx + c = 0$. Otherwise, an equation would look like: $$
+\bar{X}_{n} = \frac{1}{n}\sum_{i=1}^{n} X_i 
+\quad \quad \quad
+\mathcal{L}_{\textbf{X}}\left( \theta \right) = \prod_{i=1}^{n} f\left(x_i \middle \vert \theta \right)
+$$
+
+## Code
+
+Now let's move on and see how we can embed our R code.
+
+The global options can be set in the YAML at the top.
+
+With `echo: true`, we intend to show both the code and the corresponding output, for every chunk of code.
+
+The following chunk of code is named *cars*, and it produces the summary for this dataset.
+
+```{r cars}
+#| label: summary-cars
+summary(cars)
+```
+
+For any given chunk you can temporarily redefine any global option. (With `eval: false`, we intend to not run the code.)
+
+```{r, include = FALSE, echo = FALSE}
+#| label: summary-cars2
+#| echo: false
+#| eval: false
+summary(cars)
+```
+
+Note how each code section of the text editor has an R console embedded in it (buttons on the right hand side).
+
+## Basic operations
+
+Let's define some variables:
+
+```{r}
+x <- 2
+y <- 3
+w <- 4
+```
+
+$x$ and $y$ are now defined and can be used in any of the future code. For example
+
+```{r}
+z <- x * y
+z
+```
+
+If the R code contains errors, Quarto will not compile the document. If you give a label to your code chunk, you will be able to find the chunk with the error very easily.
+
+The code can be added inline with the same dash symbol. In the simplest case there is no evaluation of the code, as in this example of how to search for help for the sum function: `?sum`. In this case I have just changed the style as in the code sections above. However, if I add an "r", then what I write will be recognised as R code and it will be evaluated. For example, `log(z)` is equal to `r log(z)`.
+
+## Including Plots
+
+You can also create and embed plots, for example:
+
+```{r}
+#| label: pressure
+#| echo: false
+#| fig-cap: "Pressure data"
+#| fig-cap-location: bottom
+#| fig-width: 10
+#| fig-height: 7
+plot(pressure)
+```
+
+## Including Plots
+
+```{r}
+#| label: packages
+#| echo: false
+#| message: false
+library(ggplot2)
+library(plotly)
+```
+
+Especially interactive plots!
+
+```{r}
+#| label: ggplot
+#| echo: false
+#| fig-width: 10
+#| fig-height: 5
+p <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width, col = Species)) + 
+  geom_point()
+ggplotly(p)
+```
+
+But note that this is allowed only in HTML output.
